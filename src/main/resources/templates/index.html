@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kai Memories | Our Little Storybook</title>
+    <style>
+        :root {
+            --paper: #faf3e7;
+            --ink: #554536;
+            --muted: #927f6a;
+            --accent: #b77b55;
+            --card: #fffdf8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                radial-gradient(ellipse at 10% 10%, #ead9bd 0, transparent 35%),
+                var(--paper);
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        header {
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #d9c8b0;
+        }
+
+        .brand {
+            font-size: 1.15rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: var(--ink);
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 0.95rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 82px 20px 56px;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font: 0.72rem Arial, sans-serif;
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: normal;
+            margin: 20px 0 12px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .memories {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 24px 90px;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 38px;
+        }
+
+        .section-heading h2 {
+            font-size: 2rem;
+            font-weight: normal;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 32px;
+        }
+
+        .polaroid {
+            background: var(--card);
+            padding: 12px 12px 24px;
+            box-shadow: 0 8px 24px #62472a18;
+            transform: rotate(-2deg);
+            transition: transform 0.25s ease;
+        }
+
+        .polaroid:nth-child(2) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid:nth-child(3) {
+            transform: rotate(-1deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0) translateY(-5px);
+        }
+
+        .photo-placeholder {
+            min-height: 230px;
+            display: grid;
+            place-items: center;
+            background: #eadbc5;
+            color: #8b7257;
+            text-align: center;
+            font-size: 3rem;
+        }
+
+        .caption {
+            margin: 17px 4px 6px;
+            font-size: 1.25rem;
+        }
+
+        .date {
+            margin: 0 4px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 52px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            border-top: 1px solid #d9c8b0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 750px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+                max-width: 380px;
+                margin: auto;
+            }
+
+            header {
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 16px;
+            }
+
+            .hero {
+                padding-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand">♡ KAI MEMORIES</div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#memories">Memories</a>
+        <a href="#about">Our Story</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="eyebrow">A little piece of forever</div>
+        <h1>Our Storybook</h1>
+        <p>
+            Little moments, big love, and memories<br>
+            we want to keep forever.
+        </p>
+    </section>
+
+    <section class="memories" id="memories">
+        <div class="section-heading">
+            <div class="eyebrow">Collected with love</div>
+            <h2>Little Moments, Forever Treasured</h2>
+        </div>
+
+        <div class="photo-grid">
+            <article class="polaroid">
+                <div class="photo-placeholder">♡</div>
+                <h3 class="caption">The Beginning</h3>
+                <p class="date">A beautiful memory awaits</p>
+            </article>
+
+            <article class="polaroid">
+                <div class="photo-placeholder">✿</div>
+                <h3 class="caption">Little Adventures</h3>
+                <p class="date">Every day is a story</p>
+            </article>
+
+            <article class="polaroid">
+                <div class="photo-placeholder">☼</div>
+                <h3 class="caption">Our Happy Place</h3>
+                <p class="date">Together is our favorite place</p>
+            </article>
+        </div>
+
+        <p class="note" id="about">
+            Every picture holds a story. Every story holds a piece of us.
+        </p>
+    </section>
+</main>
+
+<footer>
+    Made with love, for Kai and family ♡
+</footer>
+
+</body>
+</html>
