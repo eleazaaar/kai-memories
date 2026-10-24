@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | Kai Caleb Memories</title>
+    <style>
+        :root {
+            --cream: #f8f5ef;
+            --paper: #fffdf9;
+            --beige: #f0e7da;
+            --line: #e8ded1;
+            --ink: #493a30;
+            --muted: #8d7b6b;
+            --rust: #b96f52;
+            --sage: #879879;
+            --gold: #bd9658;
+            --shadow: 0 8px 26px #4b35200b
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--ink);
+            font: 14px/1.5 Inter, "Segoe UI", sans-serif
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        input {
+            font: inherit
+        }
+
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            width: 250px;
+            background: var(--beige);
+            border-right: 1px solid #e3d6c7;
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            z-index: 5;
+            transition: transform .2s
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 0 10px 28px
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            background: var(--rust);
+            color: white;
+            display: grid;
+            place-items: center;
+            font: 26px Georgia
+        }
+
+        .brand-name {
+            font: 600 21px Georgia
+        }
+
+        .brand-sub {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        .nav-label {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #a28d7b;
+            text-transform: uppercase;
+            padding: 0 12px;
+            margin: 8px 0
+        }
+
+        .nav {
+            display: grid;
+            gap: 4px
+        }
+
+        .nav a {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 11px 12px;
+            border-radius: 10px;
+            color: #75665a;
+            font-size: 13px
+        }
+
+        .nav a:hover {
+            background: #fff9f1
+        }
+
+        .nav a.active {
+            background: var(--rust);
+            color: white
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 17px
+        }
+
+        .side-bottom {
+            margin-top: auto
+        }
+
+        .note {
+            padding: 14px;
+            background: #e8dccd;
+            border: 1px solid #dfd0be;
+            border-radius: 13px;
+            margin: 18px 3px;
+            color: #806f60;
+            font: italic 13px Georgia
+        }
+
+        .logout {
+            display: block;
+            padding: 11px 12px;
+            color: #75665a
+        }
+
+        .side-foot {
+            border-top: 1px solid #dfd1c2;
+            padding: 12px 10px 0;
+            color: #a18e7c;
+            font-size: 11px
+        }
+
+        .main {
+            margin-left: 250px;
+            min-width: 0
+        }
+
+        .topbar {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px 32px;
+            background: #fffdf9d9;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .top-left {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .menu {
+            display: none
+        }
+
+        .crumb {
+            font-size: 11px;
+            color: #a08c7a;
+            margin-bottom: 3px
+        }
+
+        .page-title {
+            font: 600 25px Georgia;
+            margin: 0
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .search {
+            position: relative
+        }
+
+        .search input {
+            width: 205px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: white;
+            outline: none
+        }
+
+        .search input:focus {
+            border-color: #c99e88
+        }
+
+        .bell {
+            width: 39px;
+            height: 39px;
+            border: 1px solid var(--line);
+            background: white;
+            border-radius: 10px;
+            color: #8b7767
+        }
+
+        .avatar {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #e6d4c1;
+            color: #8e6047;
+            font: 600 15px Georgia
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 9px
+        }
+
+        .profile-name {
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .profile-role {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .content {
+            max-width: 1500px;
+            margin: auto;
+            padding: 28px 32px 40px
+        }
+
+        .welcome {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 24px
+        }
+
+        .kicker {
+            font-size: 10px;
+            font-weight: 750;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--rust);
+            margin-bottom: 7px
+        }
+
+        .welcome h2 {
+            font: 500 30px/1.2 Georgia;
+            margin: 0
+        }
+
+        .welcome h2 em {
+            color: var(--rust);
+            font-weight: 400
+        }
+
+        .welcome p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .date {
+            border: 1px solid var(--line);
+            background: var(--paper);
+            padding: 10px 13px;
+            border-radius: 10px;
+            color: #806f60;
+            font-size: 12px;
+            white-space: nowrap
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin: 28px 0 14px
+        }
+
+        .heading h2 {
+            font: 600 18px Georgia;
+            margin: 0
+        }
+
+        .heading p {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 4px 0 0
+        }
+
+        .link {
+            font-size: 12px;
+            font-weight: 650;
+            color: #96563f
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 13px
+        }
+
+        .card,
+        .panel {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            box-shadow: var(--shadow);
+            min-width: 0
+        }
+
+        .stat {
+            padding: 17px 18px
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #887769
+        }
+
+        .stat-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-size: 17px
+        }
+
+        .rust {
+            background: #f6e8df;
+            color: #b96f52
+        }
+
+        .sage {
+            background: #e9eee3;
+            color: #788b68
+        }
+
+        .blue {
+            background: #e8eef1;
+            color: #718b98
+        }
+
+        .gold {
+            background: #f6efdf;
+            color: #b38c4e
+        }
+
+        .rose {
+            background: #f4e7e7;
+            color: #b77b7b
+        }
+
+        .lilac {
+            background: #eee9f2;
+            color: #9380a0
+        }
+
+        .number {
+            font: 600 30px Georgia;
+            margin: 13px 0 4px
+        }
+
+        .stat-foot {
+            font-size: 11px;
+            color: #a08f80
+        }
+
+        .quick {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 10px
+        }
+
+        .quick a {
+            min-height: 91px;
+            padding: 13px 11px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: var(--paper);
+            transition: .15s
+        }
+
+        .quick a:hover {
+            border-color: #d8b6a3;
+            background: #fff9f3;
+            transform: translateY(-2px)
+        }
+
+        .quick-icon {
+            font-size: 19px;
+            color: var(--rust)
+        }
+
+        .quick-label {
+            font-size: 11px;
+            font-weight: 650;
+            line-height: 1.35
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(270px, 1fr);
+            gap: 16px;
+            align-items: start
+        }
+
+        .panel-head {
+            padding: 17px 19px 13px;
+            border-bottom: 1px solid #f0e9df;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center
+        }
+
+        .panel-title {
+            font: 600 17px Georgia;
+            margin: 0
+        }
+
+        .panel-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin: 4px 0 0
+        }
+
+        .panel-body {
+            padding: 7px 19px 15px
+        }
+
+        .activity,
+        .event {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f2ece4
+        }
+
+        .activity:last-child,
+        .event:last-child {
+            border-bottom: 0
+        }
+
+        .thumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            display: grid;
+            place-items: center;
+            font-size: 17px;
+            flex-shrink: 0
+        }
+
+        .activity-main {
+            flex: 1;
+            min-width: 0
+        }
+
+        .activity-title,
+        .event-title {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            overflow-wrap: anywhere
+        }
+
+        .meta {
+            font-size: 11px;
+            color: #9b8a7b
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 20px;
+            padding: 5px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            background: #eaf0e5;
+            color: #708660
+        }
+
+        .status:before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor
+        }
+
+        .draft {
+            background: #f6eedf;
+            color: #aa8548
+        }
+
+        .private {
+            background: #ece8f1;
+            color: #8b79a0
+        }
+
+        .archived {
+            background: #efede9;
+            color: #92877c
+        }
+
+        .empty {
+            padding: 18px 0;
+            text-align: center;
+            color: #9c8c7d;
+            font-size: 12px
+        }
+
+        .event-date {
+            width: 45px;
+            height: 50px;
+            border: 1px solid #ead9c9;
+            background: #f7eee4;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #96563f;
+            flex-shrink: 0
+        }
+
+        .event-date strong {
+            font: 600 19px Georgia
+        }
+
+        .event-date span {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px
+        }
+
+        .event-copy {
+            min-width: 0
+        }
+
+        .status-panel {
+            padding: 18px 19px
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 14px;
+            font-size: 12px
+        }
+
+        .status-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #78695d
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%
+        }
+
+        .count {
+            font-weight: 700
+        }
+
+        .bar {
+            height: 7px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            gap: 3px;
+            background: #f0e9df;
+            margin-top: 17px
+        }
+
+        .bar span {
+            border-radius: 20px
+        }
+
+        .footnote {
+            text-align: center;
+            color: #ad9b8a;
+            font: italic 12px Georgia;
+            padding-top: 26px
+        }
+
+        @media(max-width:1200px) {
+            .sidebar {
+                width: 225px
+            }
+
+            .main {
+                margin-left: 225px
+            }
+
+            .content {
+                padding-inline: 23px
+            }
+
+            .topbar {
+                padding-inline: 23px
+            }
+
+            .quick {
+                grid-template-columns: repeat(3, minmax(0, 1fr))
+            }
+
+            .stats {
+                gap: 10px
+            }
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                width: 260px;
+                transform: translateX(-100%)
+            }
+
+            .sidebar.open {
+                transform: translateX(0)
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .menu {
+                display: grid;
+                place-items: center;
+                width: 38px;
+                height: 38px;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                background: white
+            }
+
+            .overlay.show {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 4;
+                background: #32251f55
+            }
+
+            .columns {
+                grid-template-columns: 1fr
+            }
+
+            .content {
+                padding: 23px 20px 34px
+            }
+        }
+
+        @media(max-width:600px) {
+            .topbar {
+                padding: 12px 13px;
+                min-height: 70px
+            }
+
+            .page-title {
+                font-size: 21px
+            }
+
+            .top-actions {
+                gap: 7px
+            }
+
+            .search {
+                display: none
+            }
+
+            .profile-copy {
+                display: none
+            }
+
+            .content {
+                padding: 20px 13px 30px
+            }
+
+            .welcome {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 13px
+            }
+
+            .welcome h2 {
+                font-size: 27px
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 9px
+            }
+
+            .stat {
+                padding: 13px
+            }
+
+            .stat-label {
+                font-size: 11px
+            }
+
+            .stat-icon {
+                width: 31px;
+                height: 31px
+            }
+
+            .number {
+                font-size: 27px
+            }
+
+            .quick {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 7px
+            }
+
+            .quick a {
+                padding: 10px 8px;
+                min-height: 82px
+            }
+
+            .quick-label {
+                font-size: 10px
+            }
+
+            .panel-head {
+                padding: 15px 13px 12px
+            }
+
+            .panel-body {
+                padding-inline: 13px
+            }
+
+            .status-panel {
+                padding: 16px 14px
+            }
+
+            .status {
+                font-size: 9px;
+                padding: 4px 6px
+            }
+
+            .activity {
+                gap: 8px
+            }
+
+            .thumb {
+                width: 35px;
+                height: 35px
+            }
+        }
+
+        @media(max-width:380px) {
+            .quick {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar">
+        <a class="brand" th:href="@{/admin}"><span class="brand-icon">♡</span><span><span class="brand-name">Kai Caleb Memories</span><span class="brand-sub" style="display:block">Family archive</span></span></a>
+        <div class="nav-label">Workspace</div>
+        <nav class="nav" aria-label="Admin navigation">
+            <a class="active" th:href="@{/admin}"><span class="nav-icon">⌂</span>Dashboard</a>
+            <a th:href="@{/admin/media}"><span class="nav-icon">▧</span>Photo &amp; Video Library</a>
+            <a th:href="@{/admin/albums}"><span class="nav-icon">▤</span>Albums</a>
+            <a th:href="@{/admin/events}"><span class="nav-icon">♧</span>Events</a>
+            <a th:href="@{/admin/invitations}"><span class="nav-icon">✉</span>Invitation Creator</a>
+            <a th:href="@{/admin/memories}"><span class="nav-icon">♡</span>Memories &amp; Milestones</a>
+            <a th:href="@{/admin/profile}"><span class="nav-icon">☼</span>Kai's Profile &amp; Our Story</a>
+            <a th:href="@{/admin/backups}"><span class="nav-icon">⇩</span>Downloads &amp; Backups</a>
+            <a th:href="@{/admin/settings}"><span class="nav-icon">⚙</span>Website Settings</a>
+        </nav>
+        <div class="side-bottom">
+            <div class="note">♡<br>“The little moments become the big memories.”</div>
+            <form th:action="@{/logout}" method="post"><button class="logout"
+                    style="border:0;background:transparent;cursor:pointer;width:100%;text-align:left" type="submit">↪
+                    &nbsp; Logout</button></form>
+            <div class="side-foot">Made with love, for Kai Caleb ♡</div>
+        </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+    <main class="main">
+        <header class="topbar">
+            <div class="top-left"><button class="menu" id="menuToggle" type="button"
+                    aria-label="Open navigation">☰</button>
+                <div>
+                    <div class="crumb">Kai Caleb Memories / Workspace</div>
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+            </div>
+            <div class="top-actions">
+                <label class="search"><input id="dashboardSearch" type="search" placeholder="⌕  Search dashboard..."
+                        aria-label="Search dashboard"></label>
+                <button class="bell" type="button" aria-label="Notifications">♧</button>
+                <div class="profile">
+                    <div class="avatar">♡</div>
+                    <div class="profile-copy">
+                        <div class="profile-name" th:text="${#authentication.name}">Administrator</div>
+                        <div class="profile-role">Family administrator</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <section class="welcome">
+                <div>
+                    <div class="kicker">Your family archive</div>
+                    <h2>Welcome back, <em th:text="${#authentication.name}">Admin</em> ♡</h2>
+                    <p>A little space to keep Kai's biggest moments and smallest everyday joys safe.</p>
+                </div>
+                <div class="date">▦ &nbsp;<span id="today">Your family memories, all in one place</span></div>
+            </section>
+            <section>
+                <div class="heading">
+                    <div>
+                        <h2>Your archive at a glance</h2>
+                        <p>A snapshot of the memories you're collecting.</p>
+                    </div>
+                </div>
+                <div class="stats">
+                    <article class="card stat">
+                        <div class="stat-top"><span class="stat-label">Photos &amp; Videos</span><span
+                                class="stat-icon rust">▧</span></div>
+                        <div class="number" th:text="${photoVideoCount != null ? photoVideoCount : '—'}">—</div>
+                        <div class="stat-foot">Media saved in your archive</div>
+                    </article>
+                    <article class="card stat">
+                        <div class="stat-top"><span class="stat-label">Albums</span><span
+                                class="stat-icon sage">▤</span></div>
+                        <div class="number" th:text="${albumCount != null ? albumCount : '—'}">—</div>
+                        <div class="stat-foot">Collections of special moments</div>
+                    </article>
+                    <article class="card stat">
+                        <div class="stat-top"><span class="stat-label">Events</span><span
+                                class="stat-icon blue">♧</span></div>
+                        <div class="number" th:text="${eventCount != null ? eventCount : '—'}">—</div>
+                        <div class="stat-foot">Family occasions recorded</div>
+                    </article>
+                    <article class="card stat">
+                        <div class="stat-top"><span class="stat-label">Memories</span><span
+                                class="stat-icon gold">♡</span></div>
+                        <div class="number" th:text="${memoryCount != null ? memoryCount : '—'}">—</div>
+                        <div class="stat-foot">Stories and milestones</div>
+                    </article>
+                    <article class="card stat">
+                        <div class="stat-top"><span class="stat-label">Published Invitations</span><span
+                                class="stat-icon rose">✉</span></div>
+                        <div class="number"
+                            th:text="${publishedInvitationCount != null ? publishedInvitationCount : '—'}">—</div>
+                        <div class="stat-foot">Ready to share or print</div>
+                    </article>
+                    <article class="card stat">
+                        <div class="stat-top"><span class="stat-label">Draft Content</span><span
+                                class="stat-icon lilac">✎</span></div>
+                        <div class="number" th:text="${draftCount != null ? draftCount : '—'}">—</div>
+                        <div class="stat-foot">Items waiting for your review</div>
+                    </article>
+                </div>
+            </section>
+            <section>
+                <div class="heading">
+                    <div>
+                        <h2>A little shortcut</h2>
+                        <p>Jump straight into your next update.</p>
+                    </div>
+                </div>
+                <div class="quick">
+                    <a th:href="@{/admin/media}"><span class="quick-icon">＋</span><span class="quick-label">Upload
+                            photos</span></a>
+                    <a th:href="@{/admin/albums/new}"><span class="quick-icon">▤</span><span class="quick-label">Create
+                            album</span></a>
+                    <a th:href="@{/admin/events/new}"><span class="quick-icon">♧</span><span class="quick-label">Create
+                            event</span></a>
+                    <a th:href="@{/admin/invitations/new}"><span class="quick-icon">✉</span><span
+                            class="quick-label">Create invitation</span></a>
+                    <a th:href="@{/admin/memories/new}"><span class="quick-icon">♡</span><span class="quick-label">Add a
+                            memory</span></a>
+                    <a th:href="@{/admin/profile}"><span class="quick-icon">☼</span><span class="quick-label">Edit Kai's
+                            profile</span></a>
+                </div>
+            </section>
+            <div class="heading">
+                <div>
+                    <h2>What's happening in your archive</h2>
+                    <p>Recent updates and the next family occasions.</p>
+                </div>
+            </div>
+            <div class="columns">
+                <section class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2 class="panel-title">Recent activity</h2>
+                            <p class="panel-sub">The latest additions to your family archive</p>
+                        </div><a class="link" th:href="@{/admin/activity}">View all ↗</a>
+                    </div>
+                    <div class="panel-body">
+                        <div th:if="${recentActivities != null and !#lists.isEmpty(recentActivities)}">
+                            <div class="activity" th:each="activity : ${recentActivities}">
+                                <div class="thumb rust">♡</div>
+                                <div class="activity-main">
+                                    <div class="activity-title" th:text="${activity.title}">Memory title</div>
+                                    <div class="meta"><span th:text="${activity.type}">Memory</span> · <span
+                                            th:text="${activity.activityDate}">Recently</span></div>
+                                </div>
+                                <span class="status"
+                                    th:classappend="${activity.status == 'Draft' ? ' draft' : (activity.status == 'Private' ? ' private' : (activity.status == 'Archived' ? ' archived' : ''))}"
+                                    th:text="${activity.status}">Published</span>
+                            </div>
+                        </div>
+                        <div class="empty" th:if="${recentActivities == null or #lists.isEmpty(recentActivities)}">Your
+                            recent updates will appear here as you add photos, stories, memories, and events.</div>
+                    </div>
+                </section>
+                <div style="display:grid;gap:16px;min-width:0">
+                    <section class="panel">
+                        <div class="panel-head">
+                            <div>
+                                <h2 class="panel-title">Upcoming events</h2>
+                                <p class="panel-sub">Special days on the horizon</p>
+                            </div><a class="link" th:href="@{/admin/events}">All events ↗</a>
+                        </div>
+                        <div style="padding:4px 19px 14px">
+                            <div th:if="${upcomingEvents != null and !#lists.isEmpty(upcomingEvents)}">
+                                <a class="event" th:each="event : ${upcomingEvents}"
+                                    th:href="@{/admin/events/{id}(id=${event.id})}">
+                                    <div class="event-date"><strong
+                                            th:text="${#temporals.format(event.eventDate, 'dd')}">12</strong><span
+                                            th:text="${#temporals.format(event.eventDate, 'MMM')}">May</span></div>
+                                    <div class="event-copy">
+                                        <div class="event-title" th:text="${event.title}">Family celebration</div>
+                                        <div class="meta"
+                                            th:text="${event.location != null and !event.location.isBlank() ? event.location : 'Location to be added'}">
+                                            Location</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="empty" th:if="${upcomingEvents == null or #lists.isEmpty(upcomingEvents)}">No
+                                upcoming events yet. Add a family occasion when you're ready.</div>
+                        </div>
+                    </section>
+                    <section class="panel status-panel">
+                        <h2 class="panel-title">Content status</h2>
+                        <p class="panel-sub">What's public and what's still private.</p>
+                        <div class="status-row"><span class="status-name"><i class="dot"
+                                    style="background:#879879"></i>Published</span><span class="count"
+                                th:text="${publishedCount != null ? publishedCount : '—'}">—</span></div>
+                        <div class="status-row"><span class="status-name"><i class="dot"
+                                    style="background:#bd9658"></i>Draft</span><span class="count"
+                                th:text="${draftCount != null ? draftCount : '—'}">—</span></div>
+                        <div class="status-row"><span class="status-name"><i class="dot"
+                                    style="background:#9380a0"></i>Private</span><span class="count"
+                                th:text="${privateCount != null ? privateCount : '—'}">—</span></div>
+                        <div class="status-row"><span class="status-name"><i class="dot"
+                                    style="background:#a69b8f"></i>Archived</span><span class="count"
+                                th:text="${archivedCount != null ? archivedCount : '—'}">—</span></div>
+                        <div class="bar" aria-hidden="true"><span style="width:40%;background:#879879"></span><span
+                                style="width:25%;background:#bd9658"></span><span
+                                style="width:20%;background:#9380a0"></span><span
+                                style="width:15%;background:#a69b8f"></span></div>
+                    </section>
+                </div>
+            </div>
+            <div class="footnote">Every little moment is part of Kai's story. ♡</div>
+        </div>
+    </main>
+    <script>
+        const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('overlay');
+        document.getElementById('menuToggle')?.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('show') });
+        overlay?.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('show') });
+        sidebar.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('show') }));
+        document.getElementById('today').textContent = new Intl.DateTimeFormat(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }).format(new Date());
+        document.getElementById('dashboardSearch')?.addEventListener('input', e => { const q = e.target.value.trim().toLowerCase(); document.querySelectorAll('.stat,.quick a,.activity,.event').forEach(el => el.style.display = !q || el.textContent.toLowerCase().includes(q) ? '' : 'none') });
+    </script>
+</body>
+
+</html>

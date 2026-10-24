@@ -3,231 +3,1354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kai Memories | Our Little Storybook</title>
+    <title>Kai Caleb Memories | Our Little Storybook</title>
+    <meta name="description" content="A little family storybook filled with Kai's memories, milestones, adventures, and special moments.">
     <style>
         :root {
-            --paper: #faf3e7;
-            --ink: #554536;
-            --muted: #927f6a;
-            --accent: #b77b55;
+            --paper: #faf5eb;
+            --paper-dark: #f0e4d1;
+            --ink: #49382d;
+            --muted: #887664;
+            --accent: #a7623e;
+            --accent-dark: #81472f;
             --card: #fffdf8;
+            --line: #e3d3be;
+            --sage: #dce2cf;
+            --blue: #dce8ef;
+            --pink: #f0dce1;
+            --shadow: 0 12px 32px rgba(83, 58, 34, 0.09);
         }
 
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
         body {
             margin: 0;
             color: var(--ink);
             background:
-                radial-gradient(ellipse at 10% 10%, #ead9bd 0, transparent 35%),
+                radial-gradient(ellipse at 10% 10%, #eee0c9 0, transparent 35%),
                 var(--paper);
             font-family: Georgia, "Times New Roman", serif;
+            line-height: 1.6;
         }
 
-        header {
-            padding: 22px 7%;
+        a {
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(250, 245, 235, 0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-container {
+            min-height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #d9c8b0;
+            gap: 24px;
         }
 
         .brand {
-            font-size: 1.15rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             color: var(--ink);
             text-decoration: none;
-            margin-left: 22px;
-            font-size: 0.95rem;
+            font-size: 1.08rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            white-space: nowrap;
         }
 
-        .hero {
-            text-align: center;
-            padding: 82px 20px 56px;
+        .brand-heart {
+            color: var(--accent);
+            font-size: 1.7rem;
         }
 
-        .eyebrow {
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font: 0.72rem Arial, sans-serif;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            color: #685548;
+            font-family: Arial, sans-serif;
+            font-size: 0.88rem;
+        }
+
+        .nav-links a:hover {
             color: var(--accent);
         }
 
-        h1 {
-            font-size: clamp(2.8rem, 7vw, 5.5rem);
-            font-weight: normal;
-            margin: 20px 0 12px;
+        .nav-links .nav-cta {
+            padding: 9px 16px;
+            border: 1px solid var(--accent);
+            border-radius: 30px;
+            color: var(--accent-dark);
         }
 
-        .hero p {
-            color: var(--muted);
+        .menu-toggle {
+            display: none;
+            border: 1px solid var(--line);
+            background: var(--card);
+            color: var(--ink);
+            padding: 8px 12px;
+            border-radius: 8px;
             font-size: 1.1rem;
-            line-height: 1.8;
+            cursor: pointer;
         }
 
-        .memories {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px 24px 90px;
+        /* Hero */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg,
+                    rgba(247, 232, 208, 0.98) 0%,
+                    rgba(247, 232, 208, 0.90) 45%,
+                    rgba(247, 232, 208, 0.12) 100%),
+                radial-gradient(ellipse at 80% 30%, #d4b28c, transparent 60%),
+                #e7d2b5;
+        }
+
+        .hero::after {
+            content: "♡";
+            position: absolute;
+            right: 7%;
+            bottom: 18px;
+            color: rgba(145, 83, 49, 0.45);
+            font-size: 5rem;
+            transform: rotate(12deg);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 610px;
+            padding: 74px 0 88px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            color: var(--accent-dark);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: Arial, sans-serif;
+            font-size: 0.72rem;
+            font-weight: bold;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 30px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero .eyebrow::before {
+            display: none;
+        }
+
+        .hero h1 {
+            margin: 0 0 18px;
+            font-size: clamp(3rem, 7vw, 5.6rem);
+            line-height: 1.04;
+            font-weight: normal;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-description {
+            max-width: 440px;
+            margin: 0 0 28px;
+            color: #675243;
+            font-size: 1.12rem;
+            line-height: 1.9;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 21px;
+            border: 1px solid var(--accent);
+            border-radius: 30px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 0.88rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .button:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .button-outline {
+            background: transparent;
+            color: var(--accent-dark);
+        }
+
+        .button-outline:hover {
+            color: white;
+        }
+
+        .hero-note {
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* Shared sections */
+
+        .section {
+            padding: 78px 0;
         }
 
         .section-heading {
+            max-width: 660px;
+            margin: 0 auto 40px;
             text-align: center;
-            margin-bottom: 38px;
+        }
+
+        .section-heading .eyebrow {
+            justify-content: center;
         }
 
         .section-heading h2 {
-            font-size: 2rem;
+            margin: 8px 0 12px;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            line-height: 1.2;
             font-weight: normal;
         }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .section-tint {
+            background: rgba(236, 222, 201, 0.45);
+            border-top: 1px solid rgba(218, 198, 171, 0.5);
+            border-bottom: 1px solid rgba(218, 198, 171, 0.5);
+        }
+
+        /* Memories */
 
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 32px;
+            gap: 30px;
+            align-items: start;
         }
 
         .polaroid {
+            position: relative;
+            min-width: 0;
+            padding: 13px 13px 20px;
             background: var(--card);
-            padding: 12px 12px 24px;
-            box-shadow: 0 8px 24px #62472a18;
-            transform: rotate(-2deg);
-            transition: transform 0.25s ease;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
-        .polaroid:nth-child(2) {
-            transform: rotate(2deg);
+        .polaroid:nth-child(3n + 1) {
+            transform: rotate(-1.7deg);
         }
 
-        .polaroid:nth-child(3) {
-            transform: rotate(-1deg);
+        .polaroid:nth-child(3n + 2) {
+            transform: rotate(1.5deg);
+        }
+
+        .polaroid:nth-child(3n) {
+            transform: rotate(-0.6deg);
         }
 
         .polaroid:hover {
-            transform: rotate(0) translateY(-5px);
+            z-index: 2;
+            transform: rotate(0) translateY(-6px);
+            box-shadow: 0 18px 38px rgba(83, 58, 34, 0.15);
+        }
+
+        .polaroid-image {
+            width: 100%;
+            height: 235px;
+            object-fit: cover;
+            background: var(--paper-dark);
         }
 
         .photo-placeholder {
-            min-height: 230px;
+            width: 100%;
+            height: 235px;
             display: grid;
             place-items: center;
-            background: #eadbc5;
-            color: #8b7257;
-            text-align: center;
-            font-size: 3rem;
+            background:
+                radial-gradient(circle at 25% 25%, #f5e8d5, transparent 50%),
+                #eadbc5;
+            color: #a17b58;
+            font-size: 3.4rem;
+        }
+
+        .polaroid-content {
+            padding: 14px 5px 0;
         }
 
         .caption {
-            margin: 17px 4px 6px;
-            font-size: 1.25rem;
+            margin: 0 0 4px;
+            font-size: 1.35rem;
+            font-weight: normal;
+            overflow-wrap: anywhere;
         }
 
         .date {
-            margin: 0 4px;
+            margin: 0;
             color: var(--muted);
-            font-size: 0.85rem;
+            font-family: Arial, sans-serif;
+            font-size: 0.78rem;
         }
 
-        .note {
+        .memory-story {
+            margin: 10px 0 0;
+            color: #786555;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            overflow-wrap: anywhere;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 44px 20px;
+            border: 1px dashed #d7c1a5;
+            border-radius: 12px;
             text-align: center;
-            margin-top: 52px;
+        }
+
+        .empty-state-icon {
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-size: 3rem;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 8px;
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
+        .empty-state p {
+            margin: 0;
             color: var(--muted);
+        }
+
+        .section-action {
+            margin-top: 38px;
+            text-align: center;
+        }
+
+        /* Meet Kai */
+
+        .about-kai {
+            padding: 78px 0;
+            background: rgba(236, 222, 201, 0.45);
+            border-top: 1px solid rgba(218, 198, 171, 0.5);
+            border-bottom: 1px solid rgba(218, 198, 171, 0.5);
+        }
+
+        .about-kai-container {
+            width: min(1000px, calc(100% - 48px));
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+            align-items: center;
+            gap: 64px;
+        }
+
+        .about-kai-image {
+            position: relative;
+            min-width: 0;
+            padding: 14px 14px 18px;
+            background: var(--card);
+            box-shadow: var(--shadow);
+            transform: rotate(-2deg);
+        }
+
+        .about-kai-image img {
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            background: var(--paper-dark);
+        }
+
+        .about-kai-photo-placeholder {
+            display: none;
+            width: 100%;
+            height: 360px;
+            place-items: center;
+            background: radial-gradient(circle at 25% 20%, #f7e9d6, transparent 45%), linear-gradient(145deg, #d8c2a1, #b7c0a6);
+            color: #fff8e9;
+            font-size: 4rem;
+        }
+
+        .about-kai-image::before {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            top: -12px;
+            left: 35%;
+            width: 100px;
+            height: 27px;
+            background: rgba(206, 177, 132, 0.65);
+            transform: rotate(-4deg);
+        }
+
+        .photo-caption {
+            display: block;
+            padding: 13px 5px 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .about-kai-content {
+            min-width: 0;
+        }
+
+        .section-eyebrow {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--accent-dark);
+            font-family: Arial, sans-serif;
+            font-size: 0.72rem;
+            font-weight: bold;
+            letter-spacing: 2.5px;
+            line-height: 1.6;
+            text-transform: uppercase;
+        }
+
+        .about-kai-content h2 {
+            margin: 0 0 18px;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            font-weight: normal;
+            line-height: 1.15;
+        }
+
+        .about-kai-content p {
+            color: #746252;
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        .about-kai-content .about-kai-intro {
+            color: var(--accent);
+            font-size: 1.2rem;
             font-style: italic;
         }
 
-        footer {
+        .about-kai-content .about-kai-closing {
+            margin-top: 24px;
+            color: var(--ink);
+            font-size: 1.08rem;
+            font-style: italic;
+        }
+
+        .about-kai-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--accent);
+            color: var(--accent-dark);
+            font-family: Arial, sans-serif;
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .about-kai-link:hover {
+            color: #85452f;
+        }
+
+        /* About / Our Story */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            align-items: center;
+            gap: 70px;
+        }
+
+        .about-photo-wrap {
+            position: relative;
+            max-width: 390px;
+            margin: 0 auto;
+            padding: 15px 15px 30px;
+            background: var(--card);
+            box-shadow: var(--shadow);
+            transform: rotate(-3deg);
+        }
+
+        .about-photo {
+            width: 100%;
+            height: 350px;
+            display: grid;
+            place-items: center;
+            background:
+                radial-gradient(circle at 70% 20%, #e7d7b9, transparent 40%),
+                linear-gradient(145deg, #d8c2a1, #b7c0a6);
+            color: #fff8e9;
+            font-size: 4rem;
+        }
+
+        .about-tape {
+            position: absolute;
+            top: -12px;
+            left: 35%;
+            width: 100px;
+            height: 28px;
+            background: rgba(206, 177, 132, 0.65);
+            transform: rotate(-4deg);
+        }
+
+        .about-copy .eyebrow {
+            margin-bottom: 12px;
+        }
+
+        .about-copy h2 {
+            margin: 0 0 20px;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            line-height: 1.15;
+            font-weight: normal;
+        }
+
+        .about-copy p {
+            color: #746252;
+            line-height: 1.95;
+        }
+
+        .handwritten {
+            margin-top: 26px;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        /* Milestones */
+
+        .milestone-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .milestone {
             text-align: center;
-            padding: 28px 20px;
-            border-top: 1px solid #d9c8b0;
+            padding: 10px;
+        }
+
+        .milestone-icon {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 16px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            font-size: 2rem;
+        }
+
+        .milestone:nth-child(4n + 1) .milestone-icon {
+            background: var(--sage);
+        }
+
+        .milestone:nth-child(4n + 2) .milestone-icon {
+            background: #f0d9c1;
+        }
+
+        .milestone:nth-child(4n + 3) .milestone-icon {
+            background: var(--blue);
+        }
+
+        .milestone:nth-child(4n) .milestone-icon {
+            background: var(--pink);
+        }
+
+        .milestone h3 {
+            margin: 0 0 6px;
+            font-size: 1.08rem;
+            font-weight: normal;
+        }
+
+        .milestone p {
+            margin: 0;
+            color: var(--muted);
+            font-family: Arial, sans-serif;
+            font-size: 0.78rem;
+        }
+
+        /* Events */
+
+        .events-section {
+            background:
+                radial-gradient(ellipse at 90% 10%, #ead8c1 0, transparent 36%),
+                #f4e9d8;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .event-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--card);
+            border: 1px solid #e6d7c3;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(83, 58, 34, 0.06);
+        }
+
+        .event-art {
+            min-height: 155px;
+            display: grid;
+            place-items: center;
+            position: relative;
+            background:
+                radial-gradient(circle at 20% 20%, #fff8e9, transparent 45%),
+                #e8d3b8;
+            color: var(--accent);
+            font-size: 3.5rem;
+        }
+
+        .event-art.sage {
+            background:
+                radial-gradient(circle at 80% 20%, #f8f4e8, transparent 45%),
+                #dfe2d1;
+            color: #657252;
+        }
+
+        .event-art.rose {
+            background:
+                radial-gradient(circle at 80% 20%, #fff7f0, transparent 45%),
+                #efd9dc;
+            color: #9e6670;
+        }
+
+        .event-content {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .event-label {
+            margin-bottom: 8px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: Arial, sans-serif;
+            font-size: 0.68rem;
+            font-weight: bold;
+        }
+
+        .event-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.4rem;
+            font-weight: normal;
+        }
+
+        .event-content p {
+            margin: 0 0 18px;
+            color: var(--muted);
+            font-size: 0.91rem;
+            line-height: 1.7;
+        }
+
+        .event-note {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+            color: #9b8a77;
+            font-family: Arial, sans-serif;
+            font-size: 0.76rem;
+        }
+
+        .events-footnote {
+            margin: 28px 0 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.92rem;
+            font-style: italic;
+        }
+
+        /* Quote */
+
+        .quote-section {
+            padding: 55px 24px;
+            text-align: center;
+        }
+
+        .quote-mark {
+            color: #bd8a64;
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .quote-section blockquote {
+            max-width: 720px;
+            margin: 12px auto;
+            font-size: clamp(1.35rem, 3vw, 2rem);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .quote-section p {
+            margin: 14px 0 0;
             color: var(--muted);
             font-size: 0.9rem;
         }
 
-        @media (max-width: 750px) {
-            .photo-grid {
-                grid-template-columns: 1fr;
-                max-width: 380px;
-                margin: auto;
+        /* Footer */
+
+        .site-footer {
+            padding: 34px 24px;
+            background: #8e6248;
+            color: #fff7ed;
+            text-align: center;
+        }
+
+        .footer-brand {
+            margin-bottom: 8px;
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+        }
+
+        .site-footer p {
+            margin: 5px 0;
+            color: #f3e2d1;
+            font-size: 0.88rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: #fff7ed;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 0.82rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 900px) {
+            .about-kai-container {
+                gap: 38px;
             }
 
-            header {
-                gap: 16px;
+            .about-kai-image img,
+            .about-kai-photo-placeholder {
+                height: 320px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .photo-grid,
+            .event-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .about-grid {
+                gap: 40px;
+            }
+
+            .milestone-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                row-gap: 30px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                width: min(100% - 32px, 500px);
+            }
+
+            .nav-container {
+                min-height: 64px;
                 flex-wrap: wrap;
+                padding: 12px 0;
             }
 
-            nav a {
-                margin-left: 0;
-                margin-right: 16px;
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                padding: 12px 0 5px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 11px 5px;
+                border-top: 1px solid var(--line);
+            }
+
+            .nav-links .nav-cta {
+                margin-top: 8px;
+                text-align: center;
+                border: 1px solid var(--accent);
             }
 
             .hero {
-                padding-top: 60px;
+                min-height: 390px;
+                background:
+                    linear-gradient(90deg,
+                        rgba(247, 232, 208, 0.96),
+                        rgba(247, 232, 208, 0.72)),
+                    radial-gradient(ellipse at 80% 20%, #d4b28c, transparent 60%),
+                    #e7d2b5;
+            }
+
+            .hero-content {
+                padding: 58px 0 65px;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.8rem, 12vw, 4.2rem);
+            }
+
+            .section {
+                padding: 58px 0;
+            }
+
+            .photo-grid,
+            .event-grid,
+            .about-grid,
+            .about-kai-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-kai-container {
+                width: min(100% - 32px, 500px);
+                gap: 35px;
+            }
+
+            .about-kai-image {
+                width: min(100%, 340px);
+                margin: 0 auto;
+            }
+
+            .about-kai-image img,
+            .about-kai-photo-placeholder {
+                height: 300px;
+            }
+
+            .photo-grid {
+                max-width: 380px;
+                margin: 0 auto;
+                gap: 28px;
+            }
+
+            .polaroid:nth-child(3n + 1),
+            .polaroid:nth-child(3n + 2),
+            .polaroid:nth-child(3n) {
+                transform: rotate(-0.5deg);
+            }
+
+            .polaroid-image,
+            .photo-placeholder {
+                height: 260px;
+            }
+
+            .about-grid {
+                gap: 35px;
+            }
+
+            .about-photo-wrap {
+                width: min(100%, 340px);
+            }
+
+            .about-photo {
+                height: 300px;
+            }
+
+            .milestone-grid {
+                gap: 24px 12px;
+            }
+
+            .milestone-icon {
+                width: 66px;
+                height: 66px;
+                font-size: 1.7rem;
+            }
+
+            .event-grid {
+                max-width: 390px;
+                margin: 0 auto;
+            }
+
+            .quote-section {
+                padding: 45px 22px;
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
-<header>
-    <div class="brand">♡ KAI MEMORIES</div>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#memories">Memories</a>
-        <a href="#about">Our Story</a>
-    </nav>
+<header class="site-header">
+    <div class="container nav-container">
+        <a class="brand" href="#home" aria-label="Kai Caleb Memories home">
+            <span class="brand-heart">♡</span>
+            <span>KAI CALEB MEMORIES</span>
+        </a>
+
+        <button class="menu-toggle"
+                type="button"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+                aria-controls="main-navigation">
+            ☰
+        </button>
+
+        <nav class="nav-links" id="main-navigation" aria-label="Main navigation">
+            <a href="#home">Home</a>
+            <a href="#about-kai">Meet Kai</a>
+            <a href="#memories">Memories</a>
+            <a href="#about">Our Story</a>
+            <a href="#milestones">Milestones</a>
+            <a href="#events" class="nav-cta">Events ♡</a>
+        </nav>
+    </div>
 </header>
 
 <main>
+    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="eyebrow">A little piece of forever</div>
-        <h1>Our Storybook</h1>
-        <p>
-            Little moments, big love, and memories<br>
-            we want to keep forever.
-        </p>
+        <div class="container">
+            <div class="hero-content">
+                <div class="eyebrow">Our little boy's big world</div>
+
+                <h1>Kai Caleb's<br>Memories <span>♡</span></h1>
+
+                <p class="hero-description">
+                    It's his world and we're just living on it.
+                </p>
+
+                <a class="button" href="#memories">
+                    Explore Our Story <span aria-hidden="true">→</span>
+                </a>
+
+                <div class="hero-note">
+                    A little family storybook, made with love.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Kai Section -->
+    <section id="about-kai" class="about-kai">
+        <div class="about-kai-container">
+
+            <div class="about-kai-image">
+                <!-- Replace with Kai's actual photo -->
+                <img
+                    src="/images/kai.jpg"
+                    alt="A special moment with Kai"
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                <div class="about-kai-photo-placeholder" aria-hidden="true">♡</div>
+                <span class="photo-caption">Our little bundle of joy</span>
+            </div>
+
+            <div class="about-kai-content">
+                <span class="section-eyebrow">A Little About Our Kai Caleb</span>
+
+                <h2>Meet Kai Caleb</h2>
+
+                <p class="about-kai-intro">
+                    Every little moment tells a beautiful story.
+                </p>
+
+                <p>
+                    Kai Caleb, our little babi — your name carries a beautiful meaning. In Hawaiian, Kai means ocean, vast and beautiful, full of wonder and endless possibilities. Caleb means strong, a reminder of the courage, resilience, and strength we hope you will carry throughout your life.
+                </p>
+                <p>
+                    Together, your name is our little wish for you: to have a heart as vast as the ocean, a spirit that embraces life's endless possibilities, and a strength that carries you through every storm.
+                </p>
+                <p>
+                    May you always be brave enough to explore, gentle enough to love, and strong enough to face whatever life brings your way. And no matter how far the waves of life take you, remember that you will always have a home in our hearts.
+                </p>
+                <p> 
+                    <b>
+                        You are our Kai Caleb — our ocean of love, our little boy of strength, and one of the most beautiful gifts life has ever given us.
+                    </b>
+                </p>
+
+                <p class="about-kai-closing">
+                    A lifetime of memories, one little moment at a time.
+                </p>
+
+                <a href="#memories" class="about-kai-link">
+                    Explore Kai Caleb's Memories &rarr;
+                </a>
+            </div>
+
+        </div>
     </section>
 
-    <section class="memories" id="memories">
-        <div class="section-heading">
-            <div class="eyebrow">Collected with love</div>
-            <h2>Little Moments, Forever Treasured</h2>
+
+    <!-- MEMORIES GALLERY -->
+    <section class="section" id="memories">
+        <div class="container">
+            <div class="section-heading">
+                <div class="eyebrow">Collected with love</div>
+                <h2>Little Moments, Forever Treasured</h2>
+                <p>
+                    From everyday adventures to life's biggest milestones,
+                    every memory has a place in our story.
+                </p>
+            </div>
+
+            <div class="photo-grid">
+
+                <article class="polaroid"
+                         th:each="memory : ${memories}">
+
+                    <img class="polaroid-image"
+                         th:if="${memory.coverImageUrl != null
+                                  and !#strings.isEmpty(memory.coverImageUrl)}"
+                         th:src="${memory.coverImageUrl}"
+                         th:alt="${memory.title}"
+                         loading="lazy">
+
+                    <div class="photo-placeholder"
+                         th:unless="${memory.coverImageUrl != null
+                                      and !#strings.isEmpty(memory.coverImageUrl)}"
+                         aria-hidden="true">
+                        ♡
+                    </div>
+
+                    <div class="polaroid-content">
+                        <h3 class="caption" th:text="${memory.title}">
+                            A beautiful memory
+                        </h3>
+
+                        <p class="date"
+                           th:if="${memory.memoryDate != null}"
+                           th:text="${#temporals.format(memory.memoryDate, 'MMMM d, yyyy')}">
+                            January 1, 2026
+                        </p>
+
+                        <p class="date"
+                           th:if="${memory.memoryDate == null}">
+                            A moment to remember
+                        </p>
+
+                        <p class="memory-story"
+                           th:if="${memory.story != null
+                                    and !#strings.isEmpty(memory.story)}"
+                           th:text="${memory.story}">
+                            A little story to remember.
+                        </p>
+                    </div>
+                </article>
+
+                <div class="empty-state"
+                     th:if="${#lists.isEmpty(memories)}">
+                    <div class="empty-state-icon" aria-hidden="true">♡</div>
+                    <h3>Your story is just beginning</h3>
+                    <p>
+                        Your family's special memories will appear here
+                        once they have been added.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="section-action">
+                <a class="button button-outline" href="#about">
+                    Discover Our Story <span aria-hidden="true">→</span>
+                </a>
+            </div>
         </div>
-
-        <div class="photo-grid">
-            <article class="polaroid">
-                <div class="photo-placeholder">♡</div>
-                <h3 class="caption">The Beginning</h3>
-                <p class="date">A beautiful memory awaits</p>
-            </article>
-
-            <article class="polaroid">
-                <div class="photo-placeholder">✿</div>
-                <h3 class="caption">Little Adventures</h3>
-                <p class="date">Every day is a story</p>
-            </article>
-
-            <article class="polaroid">
-                <div class="photo-placeholder">☼</div>
-                <h3 class="caption">Our Happy Place</h3>
-                <p class="date">Together is our favorite place</p>
-            </article>
-        </div>
-
-        <p class="note" id="about">
-            Every picture holds a story. Every story holds a piece of us.
-        </p>
     </section>
+
+    <!-- ABOUT KAI -->
+    <section class="section section-tint" id="about">
+        <div class="container about-grid">
+
+            <div class="about-photo-wrap">
+                <div class="about-tape" aria-hidden="true"></div>
+                <div class="about-photo" role="img"
+                     aria-label="Decorative photo placeholder">
+                    ♡
+                </div>
+            </div>
+
+            <div class="about-copy">
+                <div class="eyebrow">A story close to our hearts</div>
+                <h2>Our Special Little Boy</h2>
+
+                <p>
+                    Every family has a story, and Kai is such a special
+                    part of ours. This little corner of the internet is
+                    dedicated to the moments that make our days brighter
+                    and our hearts fuller.
+                </p>
+
+                <p>
+                    From the smallest discoveries to the biggest
+                    celebrations, we want to keep the laughter, adventures,
+                    and little everyday moments that make growing up so
+                    beautiful.
+                </p>
+
+                <div class="handwritten">
+                    So many memories,<br>
+                    and still so many more to come... ♡
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MILESTONES -->
+    <section class="section" id="milestones">
+        <div class="container">
+            <div class="section-heading">
+                <div class="eyebrow">Little steps, big memories</div>
+                <h2>Milestones Along the Way</h2>
+                <p>
+                    The firsts, the favorites, and all the moments
+                    we never want to forget.
+                </p>
+            </div>
+
+            <!-- Illustrative milestones; can be connected to the database later. -->
+            <div class="milestone-grid">
+                <article class="milestone">
+                    <div class="milestone-icon" aria-hidden="true">♧</div>
+                    <h3>First Steps</h3>
+                    <p>A wonderful new beginning</p>
+                </article>
+
+                <article class="milestone">
+                    <div class="milestone-icon" aria-hidden="true">♡</div>
+                    <h3>First Words</h3>
+                    <p>A little voice, so much joy</p>
+                </article>
+
+                <article class="milestone">
+                    <div class="milestone-icon" aria-hidden="true">☆</div>
+                    <h3>New Adventures</h3>
+                    <p>Discovering the world</p>
+                </article>
+
+                <article class="milestone">
+                    <div class="milestone-icon" aria-hidden="true">♕</div>
+                    <h3>Birthdays</h3>
+                    <p>Another year of love</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTS: DESIGN PLACEHOLDER FOR FUTURE MODULE -->
+    <section class="section events-section" id="events">
+        <div class="container">
+            <div class="section-heading">
+                <div class="eyebrow">Gatherings made special</div>
+                <h2>Moments Worth Celebrating</h2>
+                <p>
+                    Birthdays, family gatherings, and happy occasions.
+                    A special place for the events that bring everyone together.
+                </p>
+            </div>
+
+            <div class="event-grid">
+
+                <article class="event-card">
+                    <div class="event-art" aria-hidden="true">♡</div>
+                    <div class="event-content">
+                        <div class="event-label">Family celebrations</div>
+                        <h3>Birthday Celebrations</h3>
+                        <p>
+                            Celebrate another year of laughter, little
+                            adventures, and beautiful memories with Kai.
+                        </p>
+                        <div class="event-note">
+                            Event details will be announced here.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="event-card">
+                    <div class="event-art sage" aria-hidden="true">✿</div>
+                    <div class="event-content">
+                        <div class="event-label">Together is better</div>
+                        <h3>Family Gatherings</h3>
+                        <p>
+                            A chance to spend time together, share stories,
+                            and make new memories with the people we love.
+                        </p>
+                        <div class="event-note">
+                            Event details will be announced here.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="event-card">
+                    <div class="event-art rose" aria-hidden="true">☆</div>
+                    <div class="event-content">
+                        <div class="event-label">A day to remember</div>
+                        <h3>Special Occasions</h3>
+                        <p>
+                            From meaningful milestones to once-in-a-lifetime
+                            moments, every celebration deserves a place.
+                        </p>
+                        <div class="event-note">
+                            Event details will be announced here.
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <p class="events-footnote">
+                Our next celebration will have its own special page here. ♡
+            </p>
+        </div>
+    </section>
+
+    <!-- FAMILY QUOTE -->
+    <section class="quote-section">
+        <div class="quote-mark" aria-hidden="true">“</div>
+
+        <blockquote>
+            Every picture holds a story.<br>
+            Every story holds a piece of us.
+        </blockquote>
+
+        <p>Our little moments, treasured forever ♡</p>
+    </section>
+
 </main>
 
-<footer>
-    Made with love, for Kai and family ♡
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-brand">♡ KAI CALEB MEMORIES</div>
+
+    <p>A little family storybook, made with love.</p>
+
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#memories">Memories</a>
+        <a href="#about">Our Story</a>
+        <a href="#milestones">Milestones</a>
+        <a href="#events">Events</a>
+    </div>
+
+    <p>Made with love, for Kai and family ♡</p>
 </footer>
+
+<script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#main-navigation");
+
+    menuToggle.addEventListener("click", () => {
+        const isOpen = navigation.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navigation.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            navigation.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.textContent = "☰";
+        });
+    });
+</script>
 
 </body>
 </html>
